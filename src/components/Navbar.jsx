@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -125,9 +126,9 @@ export default function Navbar() {
                     {link.label}
                   </button>
                 ) : (
-                  <a 
+                  <Link 
                     key={index}
-                    href={link.href}
+                    to={link.href}
                     className={`px-4 py-2 transition-all duration-200 font-medium relative rounded-lg ${
                       isActivePage(link.href)
                         ? 'text-white bg-gray-800'
@@ -142,7 +143,7 @@ export default function Navbar() {
                     {isActivePage(link.href) && (
                       <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full"></div>
                     )}
-                  </a>
+                  </Link>
                 )
               ))}
             </div>
