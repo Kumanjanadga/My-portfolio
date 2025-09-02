@@ -23,7 +23,7 @@ export default function Projects() {
       ],
       image: "/AskHire.png",
       type: "Academic Project",
-      demoUrl: "" // Add demo URL if available
+      demoUrl: "" 
     },
     {
       id: 2,
