@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -83,9 +83,12 @@ export default function Navbar() {
     return currentPath.startsWith(href);
   };
 
+  // ...inside Navbar component
+  const navigate = useNavigate();
+
   const handleNavigation = (href) => {
     setIsMenuOpen(false);
-    window.location.href = href;
+    navigate(href);
   };
 
   return (
@@ -103,52 +106,52 @@ export default function Navbar() {
                   e.preventDefault();
                   handleNavigation('/');
                 }}
-              >
+                >
                 <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center group-hover:bg-gray-100 transition-all duration-200 group-hover:scale-105">
                   <span className="text-black font-bold text-lg">AK</span>
                 </div>
-              </a>
-            </div>
+                </a>
+              </div>
 
-            {/* Desktop Menu */}
-            <div className="hidden lg:flex items-center space-x-1">
-              {navigationLinks.map((link, index) => (
+              {/* Desktop Menu */}
+              <div className="hidden lg:flex items-center space-x-1">
+                {navigationLinks.map((link, index) => (
                 link.isButton ? (
                   <button 
-                    key={index}
-                    className={`px-6 py-2 rounded-full font-medium transition-all duration-200 transform hover:scale-105 ${
-                      isActivePage(link.href)
-                        ? 'bg-gray-300 text-black shadow-lg'
-                        : 'bg-white text-black hover:bg-gray-100 hover:shadow-md'
-                    }`}
-                    onClick={() => handleNavigation(link.href)}
+                  key={index}
+                  className={`px-6 py-2 rounded-full font-medium transition-all duration-200 transform hover:scale-105 ${
+                    isActivePage(link.href)
+                    ? 'bg-gray-300 text-black shadow-lg'
+                    : 'bg-white text-black hover:bg-gray-100 hover:shadow-md'
+                  }`}
+                  onClick={() => handleNavigation(link.href)}
                   >
-                    {link.label}
+                  {link.label}
                   </button>
                 ) : (
                   <Link 
-                    key={index}
-                    to={link.href}
-                    className={`px-4 py-2 transition-all duration-200 font-medium relative rounded-lg ${
-                      isActivePage(link.href)
-                        ? 'text-white bg-gray-800'
-                        : 'hover:text-gray-300 hover:bg-gray-800'
-                    }`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavigation(link.href);
-                    }}
+                  key={index}
+                  to={link.href}
+                  className={`px-4 py-2 transition-all duration-200 font-medium relative rounded-lg ${
+                    isActivePage(link.href)
+                    ? 'text-white bg-gray-800'
+                    : 'hover:text-gray-300 hover:bg-gray-800'
+                  }`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavigation(link.href);
+                  }}
                   >
-                    {link.label}
-                    {isActivePage(link.href) && (
-                      <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full"></div>
-                    )}
+                  {link.label}
+                  {isActivePage(link.href) && (
+                    <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full"></div>
+                  )}
                   </Link>
                 )
-              ))}
-            </div>
+                ))}
+              </div>
 
-            {/* Mobile/Tablet Menu Button */}
+              {/* Mobile/Tablet Menu Button */}
             <button 
               className="lg:hidden p-2 hover:bg-gray-800 rounded-lg transition-colors duration-200 touch-manipulation"
               onClick={toggleMenu}
