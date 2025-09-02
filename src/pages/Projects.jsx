@@ -111,7 +111,7 @@ export default function Projects() {
           {projects.map((project) => (
             <div key={project.id} className="group bg-gray-800 rounded-lg overflow-hidden hover:shadow-2xl transition-all duration-300">
               {/* Project Image/Background */}
-              {project.image.startsWith("/") ? (
+              {project.image.startsWith("./") ? (
                 <div className="h-80 relative overflow-hidden">
                   <img
                     src={project.image}
