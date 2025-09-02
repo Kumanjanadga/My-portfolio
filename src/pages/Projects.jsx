@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import { Github, ExternalLink, Calendar, User, Code, Image as ImageIcon } from 'lucide-react';
+import React from 'react';
+import { Github, ExternalLink, Calendar, User, Code } from 'lucide-react';
 
 export default function Projects() {
-  const [imageErrors, setImageErrors] = useState({});
-
   const projects = [
     {
       id: 1,
@@ -23,15 +21,9 @@ export default function Projects() {
           url: "https://github.com/AskHire/AskHire-Frontend.git"
         }
       ],
-      images: [
-        "/AskHire.png",
-        "./AskHire.png",
-        "AskHire.png",
-        "/public/AskHire.png"
-      ],
+      image: "./AskHire.png",
       type: "Academic Project",
-      demoUrl: "",
-      fallbackGradient: "from-blue-600 via-indigo-600 to-purple-700"
+      demoUrl: "" // Add demo URL if available
     },
     {
       id: 2,
@@ -42,15 +34,9 @@ export default function Projects() {
       role: "Hardware Developer",
       skills: ["Arduino Programming", "Stepper Motor Control", "Embedded Systems", "Mechanical Design"],
       repositories: [],
-      images: [
-        "/Strikemate.jpeg",
-        "./Strikemate.jpeg",
-        "Strikemate.jpeg",
-        "/public/Strikemate.jpeg"
-      ],
+      image: "./Strikemate.jpeg",
       type: "Microcontroller Project",
-      demoUrl: "",
-      fallbackGradient: "from-green-600 via-teal-600 to-cyan-700"
+      demoUrl: ""
     },
     {
       id: 3,
@@ -66,15 +52,9 @@ export default function Projects() {
           url: "https://github.com/Kumanjanadga/Expense-Master-Mobile-App.git"
         }
       ],
-      images: [
-        "/Expense.png",
-        "./Expense.png",
-        "Expense.png",
-        "/public/Expense.png"
-      ],
+      image: "./Expense.png",
       type: "Self-Learning Project",
-      demoUrl: "",
-      fallbackGradient: "from-orange-600 via-red-600 to-pink-700"
+      demoUrl: ""
     },
     {
       id: 4,
@@ -90,46 +70,11 @@ export default function Projects() {
           url: "https://github.com/Kumanjanadga/Real-Taste-MobileApp.git"
         }
       ],
-      images: [
-        "/RealTaste.png",
-        "./RealTaste.png",
-        "RealTaste.png",
-        "/public/RealTaste.png"
-      ],
+      image: "./RealTaste.png",
       type: "Self-Learning Project",
-      demoUrl: "",
-      fallbackGradient: "from-emerald-600 via-green-600 to-teal-700"
+      demoUrl: ""
     }
   ];
-
-  const handleImageError = (projectId, currentImageIndex) => {
-    const project = projects.find(p => p.id === projectId);
-    if (project && currentImageIndex < project.images.length - 1) {
-      // Try next image path
-      setImageErrors(prev => ({
-        ...prev,
-        [projectId]: (prev[projectId] || 0) + 1
-      }));
-    } else {
-      // All image paths failed, show fallback
-      setImageErrors(prev => ({
-        ...prev,
-        [projectId]: -1
-      }));
-    }
-  };
-
-  const getCurrentImageSrc = (project) => {
-    const errorCount = imageErrors[project.id] || 0;
-    if (errorCount === -1 || errorCount >= project.images.length) {
-      return null; // Show fallback
-    }
-    return project.images[errorCount];
-  };
-
-  const shouldShowFallback = (projectId) => {
-    return imageErrors[projectId] === -1 || (imageErrors[projectId] || 0) >= projects.find(p => p.id === projectId).images.length;
-  };
 
   const handleGitHubClick = (url) => {
     window.open(url, '_blank');
@@ -145,196 +90,134 @@ export default function Projects() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      {/* Hero Section - Responsive */}
+      {/* Hero Section */}
       <div 
-        className="relative h-64 sm:h-80 lg:h-96 bg-cover bg-center flex items-center justify-center"
+        className="relative h-96 bg-cover bg-center flex items-center justify-center"
         style={{
           backgroundImage: "linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1200 600\"><rect fill=\"%23334155\" width=\"1200\" height=\"600\"/><polygon fill=\"%23475569\" points=\"0,600 400,300 800,450 1200,200 1200,600\"/></svg>')"
         }}
       >
-        <div className="text-center px-4">
-          <div className="border-2 border-white inline-block px-4 sm:px-6 lg:px-8 py-2 sm:py-3 hover:bg-white hover:text-gray-900 transition-all duration-300">
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-wider">PORTFOLIO</h1>
+        <div className="text-center">
+          <div className="border-2 border-white inline-block px-8 py-3">
+            <h1 className="text-3xl font-bold tracking-wider">PORTFOLIO</h1>
           </div>
         </div>
       </div>
 
-      {/* Projects Grid - Fully Responsive */}
-      <div className="max-w-7xl mx-auto py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-            Featured Projects
-          </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
-            A showcase of my recent work in full-stack development, mobile applications, and hardware projects
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+      {/* Projects Grid */}
+      <div className="max-w-6xl mx-auto py-16 px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project) => (
-            <div key={project.id} className="group bg-gray-800 rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] border border-gray-700 hover:border-gray-600">
-              {/* Project Image with Multiple Fallbacks */}
-              <div className="h-48 sm:h-56 lg:h-64 xl:h-80 relative overflow-hidden">
-                {!shouldShowFallback(project.id) ? (
+            <div key={project.id} className="group bg-gray-800 rounded-lg overflow-hidden hover:shadow-2xl transition-all duration-300">
+              {/* Project Image/Background */}
+              {project.image.startsWith("/") ? (
+                <div className="h-80 relative overflow-hidden">
                   <img
-                    src={getCurrentImageSrc(project)}
+                    src={project.image}
                     alt={project.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    onError={() => handleImageError(project.id, imageErrors[project.id] || 0)}
-                    loading="lazy"
                   />
-                ) : (
-                  /* Enhanced Fallback Design */
-                  <div className={`w-full h-full bg-gradient-to-br ${project.fallbackGradient} relative`}>
-                    <div className="absolute inset-0 bg-black/20"></div>
-                    <div className="flex items-center justify-center h-full relative z-10">
-                      <div className="text-center">
-                        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
-                          <ImageIcon className="w-8 h-8 sm:w-10 sm:h-10 text-white/80" />
-                        </div>
-                        <h3 className="text-lg sm:text-xl font-bold mb-2">{project.title}</h3>
-                        <p className="text-sm sm:text-base opacity-90">{project.category}</p>
+                  <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-all duration-300">
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <span className="inline-block bg-white/20 text-xs px-2 py-1 rounded mb-2">
+                        {project.type}
+                      </span>
+                      <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                      <div className="flex items-center text-sm text-gray-300 mb-2">
+                        <Calendar className="w-4 h-4 mr-2" />
+                        {project.year}
                       </div>
-                    </div>
-                    {/* Decorative Elements */}
-                    <div className="absolute top-4 right-4 w-8 h-8 border border-white/20 rounded-full animate-pulse"></div>
-                    <div className="absolute bottom-4 left-4 w-6 h-6 bg-white/10 rounded-full animate-bounce"></div>
-                  </div>
-                )}
-
-                <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-all duration-300">
-                  <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
-                    <span className="inline-block bg-white/20 text-xs px-2 py-1 rounded mb-2 backdrop-blur-sm">
-                      {project.type}
-                    </span>
-                    <h3 className="text-lg sm:text-xl font-bold mb-1 sm:mb-2">{project.title}</h3>
-                    <div className="flex items-center text-xs sm:text-sm text-gray-300">
-                      <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                      {project.year}
                     </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className={`h-80 ${project.image} relative overflow-hidden`}>
+                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-all duration-300">
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <span className="inline-block bg-white/20 text-xs px-2 py-1 rounded mb-2">
+                        {project.type}
+                      </span>
+                      <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                      <div className="flex items-center text-sm text-gray-300 mb-2">
+                        <Calendar className="w-4 h-4 mr-2" />
+                        {project.year}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Project Details */}
-              <div className="p-4 sm:p-6">
-                <div className="flex items-center text-xs sm:text-sm text-gray-400 mb-3">
-                  <User className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+              <div className="p-6">
+                <div className="flex items-center text-sm text-gray-400 mb-3">
+                  <User className="w-4 h-4 mr-2" />
                   {project.role}
                 </div>
                 
-                <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
+                <p className="text-gray-300 text-sm leading-relaxed mb-4">
                   {project.description}
                 </p>
 
                 {/* Skills */}
-                <div className="mb-4 sm:mb-6">
-                  <div className="flex items-center text-xs sm:text-sm text-gray-400 mb-2">
-                    <Code className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                <div className="mb-4">
+                  <div className="flex items-center text-sm text-gray-400 mb-2">
+                    <Code className="w-4 h-4 mr-2" />
                     Technologies:
                   </div>
-                  <div className="flex flex-wrap gap-1 sm:gap-2">
+                  <div className="flex flex-wrap gap-2">
                     {project.skills.map((skill, index) => (
-                      <span 
-                        key={index} 
-                        className="bg-gray-700 hover:bg-gray-600 text-xs px-2 py-1 rounded transition-colors duration-200 border border-gray-600 hover:border-gray-500"
-                      >
+                      <span key={index} className="bg-gray-700 text-xs px-2 py-1 rounded">
                         {skill}
                       </span>
                     ))}
                   </div>
                 </div>
 
-                {/* Links - Mobile Optimized */}
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0 sm:space-x-4">
-                  {/* Repository Links */}
-                  {project.repositories.length > 0 ? (
-                    <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                {/* Links */}
+                <div className="flex items-center space-x-6">
+                  {project.repositories.length > 0 && (
+                    <div className="flex items-center space-x-4">
                       {project.repositories.map((repo, index) => (
-                        <button
-                          key={index}
-                          onClick={() => handleGitHubClick(repo.url)}
-                          className="flex items-center space-x-1 sm:space-x-2 bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded-lg transition-all duration-200 touch-manipulation text-xs sm:text-sm border border-gray-600 hover:border-gray-500"
-                        >
-                          <Github className="w-3 h-3 sm:w-4 sm:h-4" />
-                          <span>{repo.name}</span>
-                        </button>
+                        <div key={index} className="flex items-center space-x-1">
+                          <Github 
+                            className="w-4 h-4 text-gray-400 hover:text-white cursor-pointer transition-colors" 
+                            onClick={() => handleGitHubClick(repo.url)}
+                            title={`View ${repo.name}`}
+                          />
+                          <span className="text-xs text-gray-500">{repo.name}</span>
+                        </div>
                       ))}
-                    </div>
-                  ) : (
-                    <div className="flex items-center text-xs sm:text-sm text-gray-500">
-                      <Code className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                      <span>Private Repository</span>
                     </div>
                   )}
                   
-                  {/* Demo Link */}
-                  <button
-                    onClick={() => handleDemoClick(project.demoUrl, project.title)}
-                    className="flex items-center space-x-1 sm:space-x-2 border border-gray-600 hover:border-gray-500 hover:bg-gray-700 px-3 py-2 rounded-lg transition-all duration-200 touch-manipulation text-xs sm:text-sm self-start sm:self-auto"
-                  >
-                    <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
-                    <span>Demo</span>
-                  </button>
+                  <div className="flex items-center space-x-2">
+                    <ExternalLink 
+                      className="w-5 h-5 text-gray-400 hover:text-white cursor-pointer transition-colors"
+                      onClick={() => handleDemoClick(project.demoUrl, project.title)}
+                      title="View Demo"
+                    />
+                    <span className="text-xs text-gray-500">Demonstration</span>
+                  </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
-
-        {/* Additional Projects Notice */}
-        <div className="text-center mt-12 sm:mt-16">
-          <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 sm:p-8 max-w-2xl mx-auto">
-            <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">More Projects Coming Soon</h3>
-            <p className="text-gray-400 text-sm sm:text-base mb-4 sm:mb-6">
-              I'm constantly working on new projects and learning new technologies. 
-              Check back regularly or follow my GitHub for the latest updates.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-              <button 
-                onClick={() => window.open('https://github.com/Kumanjanadga', '_blank')}
-                className="flex items-center justify-center space-x-2 bg-gray-700 hover:bg-gray-600 px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-all duration-200 text-sm sm:text-base touch-manipulation"
-              >
-                <Github className="w-4 h-4" />
-                <span>Follow on GitHub</span>
-              </button>
-              <button 
-                onClick={() => window.location.href = "/contact"}
-                className="flex items-center justify-center space-x-2 border border-gray-600 hover:border-gray-500 hover:bg-gray-700 px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-all duration-200 text-sm sm:text-base touch-manipulation"
-              >
-                <ExternalLink className="w-4 h-4" />
-                <span>Get in Touch</span>
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
 
-      {/* Call to Action - Mobile Responsive */}
-      <div className="bg-black py-12 sm:py-16 border-t border-gray-800">
-        <div className="text-center px-4 sm:px-6 max-w-4xl mx-auto">
-          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 sm:mb-4">
-            Ready to Start Your Next Project?
-          </h2>
-          <p className="text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
-            I'm always excited to work on new challenges and help bring innovative ideas to life. 
-            Let's collaborate and build something incredible together.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button 
-              onClick={() => window.location.href = "/contact"}
-              className="bg-white text-gray-900 px-6 sm:px-8 py-3 hover:bg-gray-100 transition-all duration-300 text-sm sm:text-base font-medium rounded-lg hover:scale-105 touch-manipulation shadow-lg hover:shadow-xl"
-            >
-              START A PROJECT
-            </button>
-            <button 
-              onClick={() => window.open('https://drive.google.com/file/d/1YnQutbw8yYEMcWjwfekkxptKCjy7WLap/view?usp=sharing', '_blank')}
-              className="border border-white px-6 sm:px-8 py-3 hover:bg-white hover:text-gray-900 transition-all duration-300 text-sm sm:text-base font-medium rounded-lg hover:scale-105 touch-manipulation"
-            >
-              VIEW RESUME
-            </button>
-          </div>
+      {/* Call to Action */}
+      <div className="bg-black py-16">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4">Interested in Working Together?</h2>
+          <p className="text-gray-400 mb-8">Let's discuss your project and create something amazing</p>
+          <button 
+            onClick={() => {
+              window.location.href = "/contact";
+            }}
+            className="border border-white px-8 py-3 hover:bg-white hover:text-black transition-colors"
+          >
+            GET IN TOUCH
+          </button>
         </div>
       </div>
     </div>
