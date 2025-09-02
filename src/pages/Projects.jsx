@@ -21,7 +21,7 @@ export default function Projects() {
           url: "https://github.com/AskHire/AskHire-Frontend.git"
         }
       ],
-      //image: "./AskHire.png",
+      image: "/AskHire.png",
       image: "bg-[url('/AskHire.png')] bg-cover bg-center",
       type: "Academic Project",
       demoUrl: "" // Add demo URL if available
@@ -35,7 +35,7 @@ export default function Projects() {
       role: "Hardware Developer",
       skills: ["Arduino Programming", "Stepper Motor Control", "Embedded Systems", "Mechanical Design"],
       repositories: [],
-      image: "./Strikemate.jpeg",
+      image: "/Strikemate.jpeg",
       type: "Microcontroller Project",
       demoUrl: ""
     },
@@ -53,7 +53,7 @@ export default function Projects() {
           url: "https://github.com/Kumanjanadga/Expense-Master-Mobile-App.git"
         }
       ],
-      image: "./Expense.png",
+      image: "/Expense.png",
       type: "Self-Learning Project",
       demoUrl: ""
     },
@@ -71,7 +71,7 @@ export default function Projects() {
           url: "https://github.com/Kumanjanadga/Real-Taste-MobileApp.git"
         }
       ],
-      image: "./RealTaste.png",
+      image: "/RealTaste.png",
       type: "Self-Learning Project",
       demoUrl: ""
     }
@@ -111,7 +111,7 @@ export default function Projects() {
           {projects.map((project) => (
             <div key={project.id} className="group bg-gray-800 rounded-lg overflow-hidden hover:shadow-2xl transition-all duration-300">
               {/* Project Image/Background */}
-              {project.image.startsWith("./") ? (
+              {project.image.startsWith("/") ? (
                 <div className="h-80 relative overflow-hidden">
                   <img
                     src={project.image}
