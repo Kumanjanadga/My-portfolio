@@ -121,7 +121,7 @@ export default function Portfolio() {
                 {/* Profile image */}
                 <div className="relative z-10 flex items-center justify-center h-full">
                   <img 
-                    src="/assets/Me1.png" 
+                    src="./Me1.png" 
                     alt="Akila Kumanjana" 
                     className="w-full h-full object-cover filter drop-shadow-2xl group-hover:scale-105 transition-transform duration-500"
                   />
