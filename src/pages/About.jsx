@@ -98,10 +98,10 @@ export default function AboutMe() {
             <div>
               <h3 className="text-xl font-bold mb-6">Experience & Activities</h3>
               <div className="space-y-4">
-                <div className="border-l-2 border-gray-600 pl-4">
+                {/* <div className="border-l-2 border-gray-600 pl-4">
                   <h4 className="font-semibold">Software Engineer Intern</h4>
                   <p className="text-gray-300 text-sm">Current Role</p>
-                </div>
+                </div> */}
                 <div className="border-l-2 border-gray-600 pl-4">
                   <h4 className="font-semibold">Active Rotaractor</h4>
                   <p className="text-gray-300 text-sm">Rotaract Club of University of Moratuwa | 2024 - Present</p>
