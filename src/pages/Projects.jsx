@@ -22,7 +22,6 @@ export default function Projects() {
         }
       ],
       image: "/AskHire.png",
-      image: "bg-[url('/AskHire.png')] bg-cover bg-center",
       type: "Academic Project",
       demoUrl: "" // Add demo URL if available
     },
