@@ -174,21 +174,13 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile/Tablet Menu Overlay */}
-        <div 
-          className={`lg:hidden fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 ${
-            isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-          }`}
-          onClick={() => setIsMenuOpen(false)}
-        />
-
         {/* Mobile/Tablet Menu */}
         <div 
-          className={`lg:hidden fixed top-16 left-0 right-0 bg-black border-t border-gray-700 transform transition-transform duration-300 ease-in-out ${
-            isMenuOpen ? 'translate-y-0' : '-translate-y-full'
+          className={`lg:hidden absolute top-full left-0 right-0 bg-black border-t border-gray-700 transform transition-all duration-300 ease-in-out z-40 ${
+            isMenuOpen ? 'translate-y-0 opacity-100 visible' : '-translate-y-full opacity-0 invisible'
           }`}
         >
-          <div className="px-4 py-6 space-y-1 max-h-screen overflow-y-auto">
+          <div className="px-4 py-6 space-y-1">
             {navigationLinks.map((link, index) => (
               link.isButton ? (
                 <button 
@@ -229,12 +221,13 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Menu Spacer - prevents content jump */}
-      <div 
-        className={`lg:hidden transition-all duration-300 ${
-          isMenuOpen ? 'h-80' : 'h-0'
-        }`}
-      />
+      {/* Mobile Menu Overlay */}
+      {isMenuOpen && (
+        <div 
+          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-30"
+          onClick={() => setIsMenuOpen(false)}
+        />
+      )}
     </>
   );
 }
